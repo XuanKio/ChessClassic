@@ -6,14 +6,18 @@ Unity **6000.0.79f1** project in `Chess/`.
 
 1. Open `Chess/` in Unity Hub.
 2. Open `Assets/Scenes/ChessGame.unity`.
-3. Press Play. Click a square to inspect coordinates; use the bottom-right arrows to
+3. Press Play. Select a piece to show move dots (capture targets use rings); click an
+   empty square or the same piece again to clear hints. Use the bottom-right arrows to
    flip/reset the board, and the playback buttons to view the sample `c4` move.
 
 The scene follows the supplied in-game screenshot: an 8×8 board on the left, Black at
 the bottom, player bars and two clocks, with **Chơi / Các nước đi** on the right.
 The New Game, Games and Players tabs are omitted. It opens on the sample `c4` position.
-This is an interactive UI preview; clocks are sample values, draw/resign are disabled,
-and chess movement rules, AI and networking are not implemented yet.
+Yellow highlights sit below the pieces. Hints follow the displayed initial or `c4`
+position, account for blockers and king safety, and work in either board orientation.
+Both colors can be inspected in this preview. This is an interactive UI preview;
+clocks are sample values, draw/resign are disabled, and moving pieces, a full game
+session (including special moves), AI and networking are not implemented yet.
 
 ## Assets and editing
 

@@ -510,8 +510,8 @@ RectTransform:
   m_Children:
   - {fileID: 895455269}
   - {fileID: 1995917899}
-  - {fileID: 646243886}
   - {fileID: 1248707258}
+  - {fileID: 646243886}
   - {fileID: 1342346692}
   - {fileID: 475020566}
   - {fileID: 679544975}
@@ -10222,7 +10222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.85, b: 0.18, a: 0.32}
+  m_Color: {r: 1, g: 1, b: 0, a: 0.5}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace ChessClassic.Presentation
 {
-    /// <summary>Scene preview controls only. This component does not implement chess rules.</summary>
+    /// <summary>Scene preview controls and move hints for the two sample positions.</summary>
     public sealed class ChessBoardPreview : MonoBehaviour
     {
         public RectTransform[] squares;
@@ -27,14 +27,37 @@ namespace ChessClassic.Presentation
         [SerializeField] private bool flipped = true;
         [SerializeField] private bool showMove = true;
         private int selected = -1;
+        private MoveHintGraphic[] moveHints;
         public const float CellSize = 98;
+
+        private void Awake()
+        {
+            // Board overlays must precede Squares, whose children contain the pieces.
+            selection.SetAsFirstSibling();
+            lastMoveTo.SetAsFirstSibling();
+            lastMoveFrom.SetAsFirstSibling();
+            moveHints = new MoveHintGraphic[64];
+            for (int i = 0; i < moveHints.Length; i++)
+            {
+                var hint = new GameObject("Move Hint", typeof(RectTransform), typeof(MoveHintGraphic));
+                hint.transform.SetParent(squares[i], false);
+                var rect = (RectTransform)hint.transform;
+                rect.anchorMin = rect.anchorMax = new Vector2(.5f, .5f);
+                rect.sizeDelta = new Vector2(CellSize, CellSize);
+                moveHints[i] = hint.GetComponent<MoveHintGraphic>();
+                moveHints[i].raycastTarget = false;
+                moveHints[i].color = new Color(0, 0, 0, .18f);
+                hint.SetActive(false);
+            }
+            RefreshBoard();
+        }
 
         public void SelectSquare(int index)
         {
             if (index < 0 || index >= squares.Length) return;
-            selected = index;
-            selection.gameObject.SetActive(true);
-            selection.anchoredPosition = squares[index].anchoredPosition;
+            var position = PreviewMoveHints.Position(showMove);
+            selected = position[index] == '\0' || selected == index ? -1 : index;
+            RefreshSelection();
             status.text = "Ô " + (char)('a' + index % 8) + (index / 8 + 1);
         }
 
@@ -54,9 +77,24 @@ namespace ChessClassic.Presentation
             RefreshBoard();
         }
 
-        public void PreviousMove() { showMove = false; RefreshBoard(); }
-        public void NextMove() { showMove = true; RefreshBoard(); }
-        public void ToggleReplay() { showMove = !showMove; RefreshBoard(); }
+        public void PreviousMove() { selected = -1; showMove = false; RefreshBoard(); }
+        public void NextMove() { selected = -1; showMove = true; RefreshBoard(); }
+        public void ToggleReplay() { selected = -1; showMove = !showMove; RefreshBoard(); }
+
+        private void RefreshSelection()
+        {
+            selection.gameObject.SetActive(selected >= 0);
+            if (selected >= 0) selection.anchoredPosition = squares[selected].anchoredPosition;
+            if (moveHints == null) return;
+            foreach (var hint in moveHints) hint.gameObject.SetActive(false);
+            if (selected < 0) return;
+            var position = PreviewMoveHints.Position(showMove);
+            foreach (int target in PreviewMoveHints.Destinations(position, selected))
+            {
+                moveHints[target].SetCapture(position[target] != '\0');
+                moveHints[target].gameObject.SetActive(true);
+            }
+        }
 
         private void RefreshBoard()
         {
@@ -91,7 +129,7 @@ namespace ChessClassic.Presentation
             moveText.text = showMove ? "1.       c4" : "";
             topClock.text = showMove ? (flipped ? "9:56" : "9:54") : "10:00";
             bottomClock.text = showMove ? (flipped ? "9:54" : "9:56") : "10:00";
-            if (selected >= 0) selection.anchoredPosition = squares[selected].anchoredPosition;
+            RefreshSelection();
         }
     }
 }
