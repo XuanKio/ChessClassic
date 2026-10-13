@@ -1,0 +1,46 @@
+# Unity generated directories (the project is in Chess/).
+/Chess/[Ll]ibrary/
+/Chess/[Tt]emp/
+/Chess/[Oo]bj/
+/Chess/[Bb]uild/
+/Chess/[Bb]uilds/
+/Chess/[Ll]ogs/
+/Chess/[Uu]ser[Ss]ettings/
+/Chess/[Mm]emoryCaptures/
+/Chess/[Rr]ecordings/
+
+# IDE caches and Unity-generated solution files.
+.vs/
+.vscode/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity diagnostics and generated Addressables data.
+sysinfo.txt
+crashlytics-build.properties
+/Chess/Assets/AddressableAssetsData/*/*.bin*
+/Chess/Assets/StreamingAssets/aa.meta
+/Chess/Assets/StreamingAssets/aa/
+
+# Local secrets and operating-system files.
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+.DS_Store
+Thumbs.db
+Desktop.ini
