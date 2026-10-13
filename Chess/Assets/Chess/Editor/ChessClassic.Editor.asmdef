@@ -1,0 +1,7 @@
+{
+  "name": "ChessClassic.Editor",
+  "rootNamespace": "ChessClassic.Editor",
+  "references": ["ChessClassic.Presentation", "Unity.ugui", "Unity.InputSystem"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}
