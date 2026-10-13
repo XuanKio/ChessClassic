@@ -1,10 +1,6 @@
 {
   "name": "ChessClassic.Presentation",
   "rootNamespace": "ChessClassic.Presentation",
-  "references": [
-    "Unity.ugui",
-    "ChessClassic.Domain",
-    "ChessClassic.Application"
-  ],
+  "references": ["Unity.ugui"],
   "autoReferenced": true
 }
