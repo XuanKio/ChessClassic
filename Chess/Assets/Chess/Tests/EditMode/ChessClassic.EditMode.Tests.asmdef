@@ -1,0 +1,7 @@
+{
+  "name": "ChessClassic.EditMode.Tests",
+  "references": ["ChessClassic.Domain", "ChessClassic.Application", "ChessClassic.Infrastructure"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}
