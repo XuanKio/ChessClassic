@@ -16,8 +16,5 @@ Artists can replace the 12 sprites in `Assets/Art/ChessCom/Pieces`, the board in
 their `.meta` files. Piece Images use preserve-aspect. Scene colors and text are
 editable in the hierarchy. No Addressables or sprite atlas is configured.
 The downloaded source files and their SHA-256 hashes are recorded in `sources.json`.
-Layout or hierarchy changes require updating the editor scene builder.
-
-Use `Chess Classic/Create Board Scene` to create the scene, or
-`Chess Classic/Validate Board Scene` to check an existing scene. The builder refuses
-to overwrite an existing scene; edit the saved scene normally in Unity.
+Edit `Assets/Scenes/ChessGame.unity` directly. Preserve the serialized references on
+`ChessBoardPreview` and the button event bindings when changing the hierarchy.

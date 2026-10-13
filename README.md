@@ -22,17 +22,15 @@ and chess movement rules, AI and networking are not implemented yet.
 - `Assets/Art/ChessCom/Icons`: gameplay icons, with SVGs in `Source/`.
 - `Assets/Art/ChessCom/Avatars`: the site's two generic player avatars.
 - `Assets/Art/ChessCom/sources.json`: source URLs, retrieval date and original SHA-256 hashes.
-- `Assets/Chess/Editor/ChessSceneSetup.cs`: repeatable scene builder and validation menu.
 
 The source assets were downloaded from the resources loaded by
 [Chess.com Play](https://www.chess.com/play) on 2026-10-13. They retain their original
 ownership; this repository does not grant a license to those third-party assets.
 The PNG icons are rasterized copies of the downloaded SVGs.
 
-The saved scene is editable in the Unity hierarchy. Use **Chess Classic → Validate
-Board Scene** to check the piece layout and button wiring. **Capture Board Preview**
-writes `Artifacts/ChessGame-preview.png` at the repository root. The create command only
-runs when `ChessGame.unity` does not already exist, so it will not overwrite scene edits.
+Edit the saved scene directly in the Unity hierarchy. The board interaction component
+`ChessBoardPreview` lives in `Assets/Chess/Presentation`; preserve its serialized
+references when changing the hierarchy. The one-time scene builder has been removed.
 
 ## Unity MCP
 

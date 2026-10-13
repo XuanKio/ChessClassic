@@ -3,26 +3,6 @@
   "retrievedDate": "2026-10-13",
   "assets": [
     {
-      "file": "Icons/Source/play-white.svg",
-      "url": "https://assets-ds.chess.com/color-icons/play-white.svg",
-      "sha256": "284058b7a3c0379352d9d4bf410dfd23b9a361ef8a2f91cb9a1d1f7e0d29c7a8"
-    },
-    {
-      "file": "Icons/Source/time-blitz.svg",
-      "url": "https://assets-ds.chess.com/color-icons/time-blitz.svg",
-      "sha256": "60b896c8fc23a5997e0a4658aff1ca213ae8465e3b3027b8038dfd85c683d504"
-    },
-    {
-      "file": "Icons/Source/device-bot.svg",
-      "url": "https://assets-ds.chess.com/color-icons/device-bot.svg",
-      "sha256": "38b5d8d559a6e017fa72af8bcb0ae38ae60c96a4c163e0e10909e62d7d0c65d1"
-    },
-    {
-      "file": "Icons/Source/hand-shake.svg",
-      "url": "https://assets-ds.chess.com/color-icons/hand-shake.svg",
-      "sha256": "095515670b1bfa98ce53c6b77bcb871911db0df7a2cc4c3cb6b9686eaa680738"
-    },
-    {
       "file": "Board/green.png",
       "url": "https://assets-themes.chess.com/image/9rdwe/200.png",
       "sha256": "ba9771fdc3e661d6ec98c7d3fcd228f34265d83abbf7079e6a42b72b56a577fe"
