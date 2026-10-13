@@ -1,0 +1,113 @@
+{
+  "sourcePage": "https://www.chess.com/play",
+  "retrievedDate": "2026-10-13",
+  "assets": [
+    {
+      "file": "Icons/Source/play-white.svg",
+      "url": "https://assets-ds.chess.com/color-icons/play-white.svg",
+      "sha256": "284058b7a3c0379352d9d4bf410dfd23b9a361ef8a2f91cb9a1d1f7e0d29c7a8"
+    },
+    {
+      "file": "Icons/Source/time-blitz.svg",
+      "url": "https://assets-ds.chess.com/color-icons/time-blitz.svg",
+      "sha256": "60b896c8fc23a5997e0a4658aff1ca213ae8465e3b3027b8038dfd85c683d504"
+    },
+    {
+      "file": "Icons/Source/device-bot.svg",
+      "url": "https://assets-ds.chess.com/color-icons/device-bot.svg",
+      "sha256": "38b5d8d559a6e017fa72af8bcb0ae38ae60c96a4c163e0e10909e62d7d0c65d1"
+    },
+    {
+      "file": "Icons/Source/hand-shake.svg",
+      "url": "https://assets-ds.chess.com/color-icons/hand-shake.svg",
+      "sha256": "095515670b1bfa98ce53c6b77bcb871911db0df7a2cc4c3cb6b9686eaa680738"
+    },
+    {
+      "file": "Board/green.png",
+      "url": "https://assets-themes.chess.com/image/9rdwe/200.png",
+      "sha256": "ba9771fdc3e661d6ec98c7d3fcd228f34265d83abbf7079e6a42b72b56a577fe"
+    },
+    {
+      "file": "Pieces/br.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/br.png",
+      "sha256": "15f53d5da900d2ea378e3075f7d035388b2c128f97b369ea638bf9e5aa9f3f06"
+    },
+    {
+      "file": "Pieces/bb.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/bb.png",
+      "sha256": "9d477cebf4aacbfbccc0f963bacca68ec6d6716030d29f4dbf3532fe281338db"
+    },
+    {
+      "file": "Pieces/bn.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/bn.png",
+      "sha256": "884e0790a18d627514fe456ab31e89bfd1be079df567aeee1632f1914339bbee"
+    },
+    {
+      "file": "Pieces/bq.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/bq.png",
+      "sha256": "c4f80cab0d982aa817d6f08785d7498876cb41de0fc030a045d4cc5cf77bdbe1"
+    },
+    {
+      "file": "Pieces/bp.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/bp.png",
+      "sha256": "aa7fc9d5b41cc83d33876d90e07bfd547c631bfe28ff0e7af9afd5d20fbe9fb4"
+    },
+    {
+      "file": "Pieces/wr.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wr.png",
+      "sha256": "1dc206303e3cfbcb71163d8e9eefbbc90b3d504c5e7ebaaaede7761fc1bf1f9d"
+    },
+    {
+      "file": "Pieces/bk.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/bk.png",
+      "sha256": "50e85d684b3ff1c5c5dd5af58d87053e198261176e2d013e04571b333cb87d33"
+    },
+    {
+      "file": "Pieces/wn.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wn.png",
+      "sha256": "8a1747138739634db1a836e7edccb9ddcce13026ba6bf649d3153299fca36c0b"
+    },
+    {
+      "file": "Pieces/wb.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wb.png",
+      "sha256": "c7fd4cf45ede0f374705377496f7f71d95441d6d2e9805ba61685a15ca0e6286"
+    },
+    {
+      "file": "Pieces/wq.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wq.png",
+      "sha256": "48e2b72f915d502773d3fe5ac28d1d2eaa61f0200dedecb6d9c5352d07573f07"
+    },
+    {
+      "file": "Pieces/wp.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wp.png",
+      "sha256": "8756692941f9b24d73d716ac24ac1c1d135fceac7e7cd090aa1525525e0292e2"
+    },
+    {
+      "file": "Pieces/wk.png",
+      "url": "https://assets-themes.chess.com/image/ejgfv/150/wk.png",
+      "sha256": "02ecadd7778df4549a406d32d1d26c395a438c641639b1e83953bf844be51b28"
+    },
+    {
+      "file": "Avatars/white.png",
+      "url": "https://www.chess.com/bundles/web/images/white_400.png",
+      "sha256": "1fdd7c6a2622b685543e2fd4314cc4b8e35c42a605fdfe0adb2f39b8ea39321d"
+    },
+    {
+      "file": "Avatars/black.png",
+      "url": "https://www.chess.com/bundles/web/images/black_400.png",
+      "sha256": "a2f8ed10978f93319a804cdd9b577d554e71610332b0753d8e9c117e735bfd0b"
+    },
+    {
+      "file": "Icons/Source/clock.svg",
+      "url": "https://www.chess.com/play/online",
+      "sha256": "635434ce64a152c10e231049dc3a0c163eb4105ceb1dae2c9bd69179cb07858f",
+      "note": "Inline SVG path from rendered DOM; explicit fill applied for Unity UI."
+    },
+    {
+      "file": "Icons/Source/flip.svg",
+      "url": "https://www.chess.com/play/online",
+      "sha256": "60d1b37cf8e257fabeecf3b638bc52d56533b29547843cabcd2e7352772df57e",
+      "note": "Inline SVG path from rendered DOM; explicit fill applied for Unity UI."
+    }
+  ]
+}
