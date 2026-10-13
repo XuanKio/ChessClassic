@@ -1,0 +1,6 @@
+{
+  "name": "ChessClassic.Application",
+  "rootNamespace": "ChessClassic.Application",
+  "references": ["ChessClassic.Domain"],
+  "noEngineReferences": true
+}
