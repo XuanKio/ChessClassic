@@ -1,6 +1,6 @@
 # C# gameplay code guide
 
-- Put new runtime scripts under `Assets/Scripts/` and group by feature as described in `architecture.md`.
+- Put new runtime scripts under `Assets/_Game/Scripts/Gameplay/<Feature>/` and group by feature as described in `architecture.md`.
 - Use clear names that match one responsibility. Keep `MonoBehaviour` classes focused on Unity lifecycle, component references, and translating engine events into feature behavior.
 - Separate authored configuration from mutable runtime state. Do not use a ScriptableObject asset as a shared container for per-enemy or per-player runtime values.
 - Make ownership and cleanup explicit for subscriptions, coroutines, spawned objects, and input callbacks. Unsubscribe or stop work when the owning object is disabled or destroyed.

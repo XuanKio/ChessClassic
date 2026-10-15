@@ -2,23 +2,21 @@
 
 Use a small, feature-oriented structure for this 2D pixel shooter. Keep gameplay rules understandable and testable without turning a small game into a framework.
 
-## Suggested code layout
+## Current code layout
 
-When gameplay code is added, start with:
+The player prototype currently uses the project-owned `_Game` layout:
 
 ```text
-Assets/Scripts/
-  Core/                 # shared primitives and project-wide contracts only
-  Features/
-    Player/
-    Enemies/
-    Weapons/
+Assets/_Game/
+  Animations/Characters/
+  ScriptableObjects/Characters/
+  Scripts/Gameplay/
+    Characters/
     Combat/
-    UI/
-  Infrastructure/      # Unity/platform adapters, save data, scene loading
+    Weapons/
 ```
 
-Create a feature folder when its first real behavior is implemented; do not create empty folders for every possible system. Keep a feature's components, configuration, and focused tests together where practical.
+Keep new runtime code in the matching feature folder under `Assets/_Game/Scripts/Gameplay/`. Create a feature folder when its first real behavior is implemented; do not create empty folders for every possible system. Keep authored character data in `ScriptableObjects/Characters` and character clips/controllers in `Animations/Characters`.
 
 ## Responsibilities
 
@@ -27,6 +25,24 @@ Create a feature folder when its first real behavior is implemented; do not crea
 - Use ScriptableObjects for authored, mostly immutable tuning data such as weapon or enemy definitions. Keep runtime health, cooldowns, and match state in runtime objects.
 - Let scenes compose systems and references. Put reusable actors and UI elements in prefabs; avoid hiding important gameplay logic in scene-only wiring.
 - Add interfaces, services, assembly definitions, or event buses only when there is a concrete need such as multiple implementations, a test seam, or a real dependency boundary.
+
+## Implemented player prototype
+
+`SampleScene` composes the current player prototype. The root `Player` owns input, movement, aiming, and the Rigidbody2D. `PlayerVisual` owns the Animator, character SpriteRenderer, presentation behavior, and a child `HitFlashOverlay`. `WeaponPivot` owns firing; its `WeaponVisual` child owns the weapon SpriteRenderer, flip behavior, and `FirePoint`.
+
+| Component | Responsibility |
+|---|---|
+| `PlayerInputHandler` | Reads WASD, mouse screen position, and mouse-button firing input. |
+| `PlayerController` | Passes input to movement, aim, and weapon components. |
+| `CharacterMovement` | Applies acceleration/deceleration and speed through Rigidbody2D. |
+| `CharacterData` | Authored move speed, acceleration, and deceleration values. |
+| `CharacterAim` | Aims at the mouse and flips character/weapon orientation together. |
+| `CharacterPresentation` | Drives Idle/Run from Rigidbody2D velocity, exposes hit flash and death calls. |
+| `WeaponController` | Spawns the configured projectile at `FirePoint`. |
+| `WeaponVisual` | Flips the weapon sprite and mirrors the fire point when aiming left. |
+| `ProjectileMovement` | Moves the projectile and removes it after its lifetime. |
+
+The player Animator uses `IsMoving` and `IsDead` bool parameters. `Idle` holds `tile_0000`; looping `Run` cycles `tile_0000` through `tile_0002`; `Die` holds `tile_0003`. `CharacterPresentation.PlayHitFlash()` briefly enables a white sprite overlay. `CharacterPresentation.SetDead()` triggers `Die` and disables the Rigidbody2D. Call these methods from a future health/damage owner; the prototype does not yet include a damage event or health system.
 
 ## Change boundaries
 
