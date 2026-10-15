@@ -36,13 +36,14 @@ Keep new runtime code in the matching feature folder under `Assets/_Game/Scripts
 | `PlayerController` | Passes input to movement, aim, and weapon components. |
 | `CharacterMovement` | Applies acceleration/deceleration and speed through Rigidbody2D. |
 | `CharacterData` | Authored move speed, acceleration, and deceleration values. |
+| `CharacterHealth` | Owns current/max health, accepts `IDamageable.TakeDamage`, and publishes health/damage/death events. |
 | `CharacterAim` | Aims at the mouse and flips character/weapon orientation together. |
-| `CharacterPresentation` | Drives Idle/Run from Rigidbody2D velocity, exposes hit flash and death calls. |
+| `CharacterPresentation` | Drives Idle/Run visuals, subscribes to health events, and handles hit flash/death visuals. |
 | `WeaponController` | Spawns the configured projectile at `FirePoint`. |
 | `WeaponVisual` | Flips the weapon sprite and mirrors the fire point when aiming left. |
 | `ProjectileMovement` | Moves the projectile and removes it after its lifetime. |
 
-The player Animator uses `IsMoving` and `IsDead` bool parameters. `Idle` holds `tile_0000`; looping `Run` cycles `tile_0000` through `tile_0002`; `Die` holds `tile_0003`. `CharacterPresentation.PlayHitFlash()` briefly enables a white sprite overlay. `CharacterPresentation.SetDead()` triggers `Die` and disables the Rigidbody2D. Call these methods from a future health/damage owner; the prototype does not yet include a damage event or health system.
+The player Animator uses `IsMoving` and `IsDead` bool parameters. `Idle` holds `tile_0000`; looping `Run` cycles `tile_0000` through `tile_0002`; `Die` holds `tile_0003`. `CharacterHealth` starts at 100 health and emits `OnHealthChanged`, `OnDamaged`, and `OnDied` in that order for a lethal hit. `CharacterPresentation` subscribes/unsubscribes to the damage and death events, so it owns only the flash and animation response; the death visual cancels a flash started by the same lethal hit. `PlayerController` handles `OnDied` by stopping movement and firing; `CharacterMovement.StopMovement()` zeros velocity and rejects later movement input while leaving Rigidbody2D simulation enabled. The prototype has no projectile collision/damage detection yet; callers can use `IDamageable` to apply damage until that feature is wired.
 
 ## Change boundaries
 
