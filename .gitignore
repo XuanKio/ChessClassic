@@ -40,3 +40,4 @@ Desktop.ini
 
 # Unity MCP client configuration (machine-specific paths/settings)
 .mcp.json
+/.codex/config.toml

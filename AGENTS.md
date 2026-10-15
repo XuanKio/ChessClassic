@@ -22,5 +22,5 @@ Use the relevant guide in `docs/agents/` for project context and recommended pat
 - Unity project root: this directory; the current Unity project folder is named `LTM`.
 - Unity version: read `ProjectSettings/ProjectVersion.txt` before relying on editor-specific behavior.
 - Rendering: 2D URP packages are installed.
-- Current gameplay baseline: `Assets/Scenes/SampleScene.unity`; inspect the scene before assuming gameplay systems exist.
+- Current gameplay baseline: `Assets/_Game/Scenes/SampleScene.unity`; inspect the scene before assuming gameplay systems exist.
 - Repository: `XuanKio/PixelShooter`, branch `main`.

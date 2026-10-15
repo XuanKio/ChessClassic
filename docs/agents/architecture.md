@@ -1,50 +1,90 @@
 # Game architecture guide
 
-Use a small, feature-oriented structure for this 2D pixel shooter. Keep gameplay rules understandable and testable without turning a small game into a framework.
+Use small Unity components with clear responsibilities. Focus on S (single responsibility) and O (extend through configuration and composition). Keep direct references for local relationships and events for state changes observed by UI or visuals.
 
-## Current code layout
+See [the Vietnamese code guide](../code-guide.md) for reading order, component placement, and examples.
 
-The player prototype currently uses the project-owned `_Game` layout:
+## Current structure
 
 ```text
 Assets/_Game/
-  Animations/Characters/
-  ScriptableObjects/Characters/
-  Scripts/Gameplay/
-    Characters/
-    Combat/
-    Weapons/
+  Art/
+    Sprites/          Source sprites, sheets and Tilesheet.txt metadata
+    Environments/ Terrain atlas and Tile assets
+    References/       Preview and Sample A/B images
+  Audio/             Source OGG audio variations
+  Fonts/                      Source fonts and HUD SDF font
+  Materials/                  Characters, Environments and VFX materials
+  Shaders/                    Shader source only
+  Animations/Characters/      Character clips and Animator controller
+  Scenes/                     Bootstrap.unity and SampleScene.unity
+  Scripts/
+    Bootstrap/                 Scene startup and build-scene dropdown
+    Gameplay/
+      Characters/              Input, movement, aim, health, player coordination
+      Weapons/                 Weapon state, data, projectile creation, weapon visuals
+      Combat/                  Projectile movement and damage contract
+    Presentation/              World depth sorting
+    UI/                        HUD and crosshair
+  ScriptableObjects/
+    Characters/                CharacterData assets
+    Weapons/                   StarterWeaponData.asset
+  Prefabs/Projectiles/          PlayerBullet.prefab
+  Settings/Input/              PlayerControls.inputactions
+  Settings/Rendering/          URP assets and scene template
 ```
 
-Keep new runtime code in the matching feature folder under `Assets/_Game/Scripts/Gameplay/`. Create a feature folder when its first real behavior is implemented; do not create empty folders for every possible system. Keep authored character data in `ScriptableObjects/Characters` and character clips/controllers in `Animations/Characters`.
+## Component ownership
 
-## Responsibilities
+| Location | Components | Responsibility |
+|---|---|---|
+| Player | PlayerInputHandler, PlayerController | Read local Input Actions; coordinate movement, aim, fire and reload |
+| Player | CharacterMovement, Rigidbody2D, CapsuleCollider2D | Accelerate/decelerate and interact with world collision |
+| Player | CharacterHealth | Own health/death and publish damage/death events |
+| Player | CharacterAim, WorldDepthSorting, SortingGroup | Apply aiming pose/flip and sort the character by foot Y |
+| PlayerVisual | CharacterPresentation, Animator, SpriteRenderer | Idle/Run/Die and shader hit flash; never change physics |
+| WeaponPivot | WeaponController, ProjectileSpawner | Own ammo/cooldown/reload; create configured projectile |
+| WeaponVisual | WeaponVisual, SpriteRenderer | Flip weapon and mirror FirePoint |
+| PlayerBullet prefab | ProjectileMovement, SpriteRenderer | Move, sweep blockers and expire; authored bullet appearance |
+| HUDCanvas/CrosshairUI | CrosshairView | Follow local aim input and own cursor visibility |
+| HUDCanvas/AmmoDisplay | AmmoDisplayView | Observe ammo/reload and update TMP text |
+| HUDCanvas/HealthBar | HealthBarView | Observe health and clip the bar fill |
+| Player/MoveDust | ParticleSystem (MoveDust.prefab) | Footstep dust: emits by distance travelled, so it is silent while standing still |
 
-- Feature code owns rules for that feature: movement, enemy behavior, firing, damage, health, and HUD behavior stay in their respective areas.
-- Unity components adapt engine events and data to gameplay behavior. Avoid a single `GameManager` owning input, combat, spawning, audio, and UI.
-- Use ScriptableObjects for authored, mostly immutable tuning data such as weapon or enemy definitions. Keep runtime health, cooldowns, and match state in runtime objects.
-- Let scenes compose systems and references. Put reusable actors and UI elements in prefabs; avoid hiding important gameplay logic in scene-only wiring.
-- Add interfaces, services, assembly definitions, or event buses only when there is a concrete need such as multiple implementations, a test seam, or a real dependency boundary.
+## Data and state
 
-## Implemented player prototype
+- CharacterData stores authored movement tuning.
+- WeaponData stores shot interval, projectile speed/lifetime, magazine capacity, and reload duration. StarterWeaponData preserves the previous scene weapon's values.
+- Current health, ammo, cooldown and reload timers belong to individual runtime components, never the shared ScriptableObjects.
+- Projectile appearance, scale, sorting and blocker mask belong to PlayerBullet.prefab. ProjectileSpawner has a separate muzzle-clearance mask.
+- The scene wires references. The current Player is a scene object, not a player prefab.
 
-`SampleScene` composes the current player prototype. The root `Player` owns input, movement, aiming, and the Rigidbody2D. `PlayerVisual` owns the Animator, character SpriteRenderer, presentation behavior, and a child `HitFlashOverlay`. `WeaponPivot` owns firing; its `WeaponVisual` child owns the weapon SpriteRenderer, flip behavior, and `FirePoint`.
+## Runtime flow
 
-| Component | Responsibility |
-|---|---|
-| `PlayerInputHandler` | Reads WASD, mouse screen position, and mouse-button firing input. |
-| `PlayerController` | Passes input to movement, aim, and weapon components. |
-| `CharacterMovement` | Applies acceleration/deceleration and speed through Rigidbody2D. |
-| `CharacterData` | Authored move speed, acceleration, and deceleration values. |
-| `CharacterHealth` | Owns current/max health, accepts `IDamageable.TakeDamage`, and publishes health/damage/death events. |
-| `CharacterAim` | Aims at the mouse and flips character/weapon orientation together. |
-| `CharacterPresentation` | Drives Idle/Run visuals, subscribes to health events, and handles hit flash/death visuals. |
-| `WeaponController` | Spawns the configured projectile at `FirePoint`. |
-| `WeaponVisual` | Flips the weapon sprite and mirrors the fire point when aiming left. |
-| `ProjectileMovement` | Moves the projectile and removes it after its lifetime. |
+PlayerInputHandler clones PlayerControls per player, enables/disables its Gameplay map, and exposes Move/Aim/Fire/Reload. It reads before PlayerController through execution order -50. PlayerController forwards requests; WeaponController owns whether a shot/reload is allowed.
 
-The player Animator uses `IsMoving` and `IsDead` bool parameters. `Idle` holds `tile_0000`; looping `Run` cycles `tile_0000` through `tile_0002`; `Die` holds `tile_0003`. `CharacterHealth` starts at 100 health and emits `OnHealthChanged`, `OnDamaged`, and `OnDied` in that order for a lethal hit. `CharacterPresentation` subscribes/unsubscribes to the damage and death events, so it owns only the flash and animation response; the death visual cancels a flash started by the same lethal hit. `PlayerController` handles `OnDied` by stopping movement and firing; `CharacterMovement.StopMovement()` zeros velocity and rejects later movement input while leaving Rigidbody2D simulation enabled. The prototype has no projectile collision/damage detection yet; callers can use `IDamageable` to apply damage until that feature is wired.
+WeaponController asks ProjectileSpawner to create a projectile. A blocked muzzle consumes no ammo. At zero ammo, the last successful shot starts reload. R requests early reload. Reload blocks firing; holding fire resumes after completion. Disabling the controller clears movement input and cancels weapon actions; it does not permanently lock movement.
+
+CharacterHealth initializes once on the first read or Awake, whichever comes first. This avoids a dependency on health execution order. On death PlayerController locks movement and cancels firing/reload; CharacterPresentation only responds visually. No respawn/reset lifecycle exists yet.
+
+CharacterPresentation retains a local flag for the applied death visual; CharacterHealth is the gameplay source of truth. Hit flash changes _FlashAmount through MaterialPropertyBlock, with no overlay sprite. URP applies `SpriteRenderer.flipX/Y` in the vertex shader, so `SpriteHitFlash.shader` must keep `Core2D.hlsl` with `SetUpSpriteInstanceProperties()` + `UnityFlipSprite`; without it CharacterAim's flip is silently ignored.
+
+ProjectileMovement currently blocks against the environment only. IDamageable is implemented by CharacterHealth; projectile-to-character damage is not wired yet. Gameplay authority is still offline/local, not server-authoritative.
+
+## HUD and maps
+
+HUDCanvas is a screen-space overlay. CrosshairView belongs only to the local HUD; remote actors must not own it. AmmoDisplayView subscribes to ammo/reload events and displays ... during reload. HealthBarView refreshes immediately when enabled.
+
+Health bar frame/fill use the existing UI tile setup and RectMask2D. See the scene and [map notes](../prototype-arena.md) for asset details. BackgroundCanvas is camera-space behind the world; the map retains its perimeter collision and decoration layers.
+
+## Movement dust
+
+`Assets/_Game/Prefabs/VFX/MoveDust.prefab` (material `Art/VFX/MoveDust.mat`, Sprite-Lit-Default, untextured square quads) sits at the bottom edge of PlayerVisual (local y −0.46; the sprite ends at −0.48). It simulates in world space and uses only `rateOverDistance` (5 per unit), so particles trail behind the character and none spawn while idle; no script drives it. Particles are 2–4 art pixels (0.08–0.16 units; one art pixel is 0.04), start fully opaque white and fade to the pack's light lavender (195,198,233) over 0.35–0.55 s, spreading in a low 80° fan. They render at order −10 on the Player layer, behind PlayerVisual, inside the player's SortingGroup, so they never cover the character; the trail stays visible because world-space particles are left outside the silhouette. Emitting at the old feet offset (−0.26, inside the body) hides them completely. Reuse the prefab on other walking actors at their sprite's bottom edge.
+
+## Bootstrap
+
+Assets/_Game/Scenes/Bootstrap.unity is build index 0. GameBootstrap loads the enabled scene selected with the BuildScene dropdown. Pressing Play directly from SampleScene skips Bootstrap. Add global services only when they actually exist.
 
 ## Change boundaries
 
-Before adding a system, identify its owner feature, inputs, outputs, lifetime, and who creates it. Prefer direct references for simple local relationships; use events for meaningful decoupling, not for every method call.
+Prefer editing data or prefab composition before adding branches to controllers. Use existing health/ammo events for observers. Add an interface or inheritance only when a real second implementation needs it. Keep the existing ScriptableObject and prefab GUIDs when editing assets.

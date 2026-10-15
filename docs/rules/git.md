@@ -2,7 +2,7 @@
 
 These rules apply to all Git operations in this repository.
 
-- **MUST** inspect `git status` before staging and again before finishing. Preserve pre-existing user changes, including newly imported `Assets/AssetGame` content when it is outside the task scope.
+- **MUST** inspect `git status` before staging and again before finishing. Preserve pre-existing user changes, including newly imported source art/audio/font content when it is outside the task scope.
 - **MUST** stage explicit paths that belong to the task. **MUST NOT** use `git add .`, `git add -A`, or equivalent bulk staging.
 - **MUST** review the staged file list and diff before committing; scan staged text for accidental credentials or secrets.
 - **MUST NOT** commit generated Unity data (`Library/`, `Temp/`, `Logs/`, `UserSettings/`) or machine-specific `.mcp.json` settings.

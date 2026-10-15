@@ -5,7 +5,7 @@ For each change, choose checks that match its scope and state their result accur
 - C# changes: validate compilation in the project's Unity version; run focused EditMode/PlayMode tests when gameplay rules changed and the Editor/test runner is available.
 - Scene or prefab changes: open the affected scene/prefab in Unity, check the Console, references, missing components, and visible result; do not claim visual validation without opening it.
 - Sprite slicing/import changes: check source dimensions against `Tilesheet.txt`, sample tiles at the sheet boundaries, transparency, orientation, pixels-per-unit, and filtering.
-- Player prototype presentation: verify Idle/Run transitions from Rigidbody2D velocity, the Die state holds the configured death sprite, and the hit-flash overlay appears and disables again.
+- Player prototype presentation: verify Idle/Run transitions from Rigidbody2D velocity, the Die state holds the configured death sprite, and the material's _FlashAmount changes and resets without an overlay sprite.
 - Player health flow: verify positive damage updates health and emits damage/death events once; Presentation only changes visuals, and the controller stops movement without disabling Rigidbody2D simulation.
 - Project/package changes: inspect the relevant manifest/lockfile and confirm Unity resolves packages before calling the project ready.
 - Before handoff, inspect `git status` and the diff. Exclude generated folders and unrelated user changes; preserve `.meta` files for Unity assets.

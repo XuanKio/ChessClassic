@@ -1,12 +1,12 @@
 # AssetGame pack guide
 
-`Assets/AssetGame/` is the imported game art/audio pack. Treat its files as source material; do not overwrite the originals when creating game-ready assets.
+The imported AssetGame pack is organized by type: sprites in `Assets/_Game/Art/Sprites/`, audio in `Assets/_Game/Audio/`, fonts in `Assets/_Game/Fonts/`, and reference images in `Assets/_Game/Art/References/`. Treat its files as source material; do not overwrite the originals when creating game-ready assets.
 
 ## Contents
 
-- `PNG/Enemies/`, `PNG/Players/`, `PNG/Weapons/`, `PNG/Interface/`, and `PNG/Tiles/` each contain a `Tilesheet.txt`, a source sheet in `Tilemap/`, and extracted images in `Tiles/`.
+- `Enemies/`, `Players/`, `Weapons/`, `Interface/`, and `Tiles/` each contain a `Tilesheet.txt`, a source sheet in `Tilemap/`, and extracted images in `Tiles/`.
 - Each `Tilemap/` currently has `tilemap.png` and `tilemap_packed.png`. Check which one is the original grid before slicing; the packed variant has no one-pixel grid gaps.
-- `Sounds/` contains OGG sound variations for actions such as movement, jumping, shooting, damage, explosions, coins, and UI errors. Preserve variations and source filenames unless a reviewed mapping is added.
+- `Assets/_Game/Audio/` contains OGG sound variations for actions such as movement, jumping, shooting, damage, explosions, coins, and UI errors. Preserve variations and source filenames unless a reviewed mapping is added.
 - `Preview.png`, `Sample A.png`, and `Sample B.png` are visual references for identifying intended art and layout.
 
 ## Verified sheet metadata
