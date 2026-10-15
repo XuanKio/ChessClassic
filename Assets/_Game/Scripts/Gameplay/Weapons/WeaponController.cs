@@ -1,57 +1,94 @@
+using System;
 using UnityEngine;
 
+// Owns firing cadence and magazine state. ProjectileSpawner creates the actual bullet.
 public sealed class WeaponController : MonoBehaviour
 {
     [SerializeField] private Transform firePoint;
-    [SerializeField] private Sprite bulletSprite;
-    [SerializeField, Min(0.01f)] private float fireRate = 0.18f;
-    [SerializeField, Min(0f)] private float bulletSpeed = 9f;
-    [SerializeField, Min(0.01f)] private float bulletLifetime = 2f;
-    [SerializeField, Min(0.01f)] private float bulletScale = 2.5f;
-    [SerializeField] private Color bulletColor = Color.yellow;
+    [SerializeField] private WeaponData data;
+    [SerializeField] private ProjectileSpawner projectileSpawner;
 
     private bool fireInput;
-private float nextShotTime;
+    private float nextShotTime;
+    private float reloadCompleteTime;
 
-public void SetFireInput(bool isPressed)
+    public int CurrentAmmo { get; private set; }
+    public int AmmoCapacity => data != null ? data.AmmoCapacity : 0;
+    public bool IsReloading { get; private set; }
+
+    public event Action<int, int> OnAmmoChanged;
+    public event Action<bool> OnReloadStateChanged;
+
+    private void Awake()
+    {
+        if (data == null || projectileSpawner == null || !projectileSpawner.IsConfigured)
+        {
+            Debug.LogError("WeaponController requires WeaponData and a configured ProjectileSpawner.", this);
+            enabled = false;
+            return;
+        }
+
+        CurrentAmmo = AmmoCapacity;
+    }
+
+    public void SetFireInput(bool isPressed)
     {
         fireInput = isPressed;
     }
 
     private void Update()
     {
-        if (fireInput && Time.time >= nextShotTime)
+        if (IsReloading)
         {
-            Fire();
-        }
-    }
-
-    private void Fire()
-    {
-        if (bulletSprite == null)
-        {
+            if (Time.time >= reloadCompleteTime) CompleteReload();
             return;
         }
 
-        nextShotTime = Time.time + fireRate;
+        if (!fireInput || Time.time < nextShotTime) return;
+
+        if (CurrentAmmo == 0) RequestReload();
+        else TryFire();
+    }
+
+    private void TryFire()
+    {
+        nextShotTime = Time.time + data.ShotInterval;
         Vector2 direction = transform.right.normalized;
-        Vector3 spawnPosition = firePoint != null
-            ? firePoint.position
-            : transform.position + (Vector3)(direction * 0.3f);
+        if (!projectileSpawner.TrySpawn(firePoint, direction, data)) return;
 
-        GameObject bullet = new GameObject("PlayerBullet");
-        SpriteRenderer renderer = bullet.AddComponent<SpriteRenderer>();
-        renderer.sprite = bulletSprite;
-        renderer.color = bulletColor;
-        renderer.sortingLayerName = "Bullet";
-        renderer.sortingOrder = 2;
+        CurrentAmmo--;
+        OnAmmoChanged?.Invoke(CurrentAmmo, AmmoCapacity);
+        if (CurrentAmmo == 0) RequestReload();
+    }
 
-        bullet.transform.position = spawnPosition;
-        bullet.transform.rotation = Quaternion.Euler(
-            0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-        bullet.transform.localScale = Vector3.one * bulletScale;
+    public void RequestReload()
+    {
+        if (!isActiveAndEnabled || data == null || IsReloading || CurrentAmmo >= AmmoCapacity) return;
 
-        ProjectileMovement projectile = bullet.AddComponent<ProjectileMovement>();
-        projectile.Initialize(direction, bulletSpeed, bulletLifetime);
+        IsReloading = true;
+        reloadCompleteTime = Time.time + data.ReloadDuration;
+        OnReloadStateChanged?.Invoke(true);
+    }
+
+    private void CompleteReload()
+    {
+        CurrentAmmo = AmmoCapacity;
+        IsReloading = false;
+        OnAmmoChanged?.Invoke(CurrentAmmo, AmmoCapacity);
+        OnReloadStateChanged?.Invoke(false);
+    }
+
+    public void CancelActions()
+    {
+        fireInput = false;
+        if (!IsReloading) return;
+
+        IsReloading = false;
+        OnReloadStateChanged?.Invoke(false);
+    }
+
+    private void OnDisable()
+    {
+        CancelActions();
     }
 }

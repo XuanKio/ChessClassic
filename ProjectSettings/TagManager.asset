@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - WorldObstacle
+  - WorldTerrain
   - 
   - 
   - 
@@ -41,3 +41,35 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 18203000
+    locked: 0
+  - name: GroundDetails
+    uniqueID: 18203001
+    locked: 0
+  - name: ElevationFaces
+    uniqueID: 18203002
+    locked: 0
+  - name: ElevationSurface
+    uniqueID: 18203003
+    locked: 0
+  - name: WorldObstacles
+    uniqueID: 18203004
+    locked: 0
+  - name: WorldActors
+    uniqueID: 18203020
+    locked: 0
+  - name: Player
+    uniqueID: 1243589875
+    locked: 0
+  - name: Weapon
+    uniqueID: 466373210
+    locked: 0
+  - name: Bullet
+    uniqueID: 988807222
+    locked: 0
+  - name: WorldCanopy
+    uniqueID: 18203010
+    locked: 0
+  m_RenderingLayers:
+  - Default

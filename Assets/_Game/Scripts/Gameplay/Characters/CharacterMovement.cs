@@ -7,6 +7,7 @@ public sealed class CharacterMovement : MonoBehaviour
     [SerializeField] private Rigidbody2D body;
 
     private Vector2 moveInput;
+    private bool movementEnabled = true;
 
     private void Awake()
     {
@@ -16,14 +17,41 @@ public sealed class CharacterMovement : MonoBehaviour
         }
     }
 
-public void SetMoveDirection(Vector2 direction)
+    public void SetMoveDirection(Vector2 direction)
     {
+        if (!movementEnabled)
+        {
+            return;
+        }
+
         moveInput = Vector2.ClampMagnitude(direction, 1f);
     }
 
-private void FixedUpdate()
+    public void StopMovement()
     {
-        if (body == null || characterData == null)
+        movementEnabled = false;
+        ClearMoveInput();
+    }
+
+    // Temporary stop for controller disable; unlike death, this does not lock movement.
+    public void ClearMoveInput()
+    {
+        moveInput = Vector2.zero;
+
+        if (body != null)
+        {
+            body.linearVelocity = Vector2.zero;
+        }
+    }
+
+    private void OnDisable()
+    {
+        ClearMoveInput();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!movementEnabled || body == null || characterData == null)
         {
             return;
         }

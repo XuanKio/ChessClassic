@@ -5,14 +5,12 @@ public sealed class CharacterAim : MonoBehaviour
     [SerializeField] private Transform weaponPivot;
     [SerializeField] private WeaponVisual weaponVisual;
     [SerializeField] private SpriteRenderer characterRenderer;
-    [SerializeField] private RectTransform crosshair;
 
     private Camera gameCamera;
     private Vector3 weaponHoldOffset;
 
     private void Awake()
     {
-        Cursor.visible = false;
         gameCamera = Camera.main;
 
         if (characterRenderer == null)
@@ -30,7 +28,7 @@ public sealed class CharacterAim : MonoBehaviour
         }
     }
 
-public void AimAtScreenPosition(Vector2 mouseScreen)
+    public void AimAtScreenPosition(Vector2 mouseScreen)
     {
         if (gameCamera == null)
         {
@@ -69,15 +67,5 @@ public void AimAtScreenPosition(Vector2 mouseScreen)
             weaponHoldOffset.z);
         weaponPivot.rotation = Quaternion.Euler(
             0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
-
-        if (crosshair != null)
-        {
-            crosshair.position = mouseScreen;
-        }
-    }
-
-    private void OnDisable()
-    {
-        Cursor.visible = true;
     }
 }
