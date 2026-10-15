@@ -1,6 +1,0 @@
-{
-  "name": "ChessClassic.Presentation",
-  "rootNamespace": "ChessClassic.Presentation",
-  "references": ["Unity.ugui"],
-  "autoReferenced": true
-}

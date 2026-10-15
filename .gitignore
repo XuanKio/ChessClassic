@@ -1,18 +1,18 @@
-# Unity generated directories (the project is in PixelShooter/).
-/PixelShooter/[Ll]ibrary/
-/PixelShooter/[Tt]emp/
-/PixelShooter/[Oo]bj/
-/PixelShooter/[Bb]uild/
-/PixelShooter/[Bb]uilds/
-/PixelShooter/[Ll]ogs/
-/PixelShooter/[Uu]ser[Ss]ettings/
-/PixelShooter/[Mm]emoryCaptures/
-/PixelShooter/[Rr]ecordings/
+# Unity-generated directories
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
 
-# IDE caches and Unity-generated solution files.
-.vs/
-.vscode/
-.idea/
+# IDE caches and Unity-generated project files
+/.vs/
+/.vscode/
+/.idea/
 *.csproj
 *.unityproj
 *.sln
@@ -28,14 +28,7 @@
 *.opendb
 *.VC.db
 
-# Unity diagnostics and generated Addressables data.
-sysinfo.txt
-crashlytics-build.properties
-/PixelShooter/Assets/AddressableAssetsData/*/*.bin*
-/PixelShooter/Assets/StreamingAssets/aa.meta
-/PixelShooter/Assets/StreamingAssets/aa/
-
-# Local secrets and operating-system files.
+# Local secrets and operating-system files
 .env
 .env.*
 !.env.example
