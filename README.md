@@ -1,8 +1,13 @@
-# ChessClassic
+# PixelShooter
+
+Unity game project, renamed from ChessClassic. The team is moving from the chess
+prototype to PixelShooter; shooter gameplay has not been implemented yet.
 
 Unity **6000.0.79f1** project in `Chess/`.
 
-## Open the board
+## Existing chess prototype
+
+The previous prototype remains available while PixelShooter development begins.
 
 1. Open `Chess/` in Unity Hub.
 2. Open `Assets/Scenes/ChessGame.unity`.
