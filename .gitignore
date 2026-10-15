@@ -37,3 +37,6 @@
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Unity MCP client configuration (machine-specific paths/settings)
+.mcp.json
