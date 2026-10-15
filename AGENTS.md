@@ -1,6 +1,14 @@
 # PixelShooter agent guide
 
-These instructions apply to the whole Unity project. Before changing a subsystem, read its matching guide in `docs/agents/`:
+These instructions apply to the whole Unity project. The agent's role is to coordinate the requested work: inspect the project, select the applicable rules, make only the authorized changes, and verify them.
+
+## Required rules
+
+Read `docs/RULES.md` before every task. Its linked files define mandatory project rules; follow every rule that applies to the task. If rules conflict or a required action is blocked, stop the dependent change and explain the conflict. The current user request takes precedence over project preferences, within platform and safety requirements.
+
+## Project guides
+
+Use the relevant guide in `docs/agents/` for project context and recommended patterns; guides explain the codebase and do not grant permission to widen task scope:
 
 - Game structure and boundaries: `docs/agents/architecture.md`
 - C# gameplay code: `docs/agents/code.md`
@@ -16,12 +24,3 @@ These instructions apply to the whole Unity project. Before changing a subsystem
 - Rendering: 2D URP packages are installed.
 - Current gameplay baseline: `Assets/Scenes/SampleScene.unity`; inspect the scene before assuming gameplay systems exist.
 - Repository: `XuanKio/PixelShooter`, branch `main`.
-
-## Working rules
-
-- Inspect the existing project and relevant guide before making changes. Keep each task focused and avoid introducing architecture for hypothetical features.
-- Preserve Unity `.meta` files and GUIDs. Move or rename an asset together with its `.meta`; never regenerate a meta file for an existing asset.
-- Keep original art/audio source files intact. Create derived assets in clearly named project-owned folders and keep a traceable link to their source.
-- Do not commit generated Unity folders such as `Library`, `Temp`, or `Logs`, or machine-specific `.mcp.json` settings.
-- Do not stage unrelated user changes. Review `git status` and stage only files needed for the requested task.
-- Explain the change and what was checked in plain language. If Unity Editor validation was unavailable, say so rather than implying it passed.
