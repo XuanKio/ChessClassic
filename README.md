@@ -3,13 +3,13 @@
 Unity game project, renamed from ChessClassic. The team is moving from the chess
 prototype to PixelShooter; shooter gameplay has not been implemented yet.
 
-Unity **6000.0.79f1** project in `Chess/`.
+Unity **6000.0.79f1** project in `PixelShooter/`.
 
 ## Existing chess prototype
 
 The previous prototype remains available while PixelShooter development begins.
 
-1. Open `Chess/` in Unity Hub.
+1. Open `PixelShooter/` in Unity Hub.
 2. Open `Assets/Scenes/ChessGame.unity`.
 3. Press Play. Select a piece to show move dots (capture targets use rings); click an
    empty square or the same piece again to clear hints. Use the bottom-right arrows to

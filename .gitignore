@@ -1,13 +1,13 @@
-# Unity generated directories (the project is in Chess/).
-/Chess/[Ll]ibrary/
-/Chess/[Tt]emp/
-/Chess/[Oo]bj/
-/Chess/[Bb]uild/
-/Chess/[Bb]uilds/
-/Chess/[Ll]ogs/
-/Chess/[Uu]ser[Ss]ettings/
-/Chess/[Mm]emoryCaptures/
-/Chess/[Rr]ecordings/
+# Unity generated directories (the project is in PixelShooter/).
+/PixelShooter/[Ll]ibrary/
+/PixelShooter/[Tt]emp/
+/PixelShooter/[Oo]bj/
+/PixelShooter/[Bb]uild/
+/PixelShooter/[Bb]uilds/
+/PixelShooter/[Ll]ogs/
+/PixelShooter/[Uu]ser[Ss]ettings/
+/PixelShooter/[Mm]emoryCaptures/
+/PixelShooter/[Rr]ecordings/
 
 # IDE caches and Unity-generated solution files.
 .vs/
@@ -31,9 +31,9 @@
 # Unity diagnostics and generated Addressables data.
 sysinfo.txt
 crashlytics-build.properties
-/Chess/Assets/AddressableAssetsData/*/*.bin*
-/Chess/Assets/StreamingAssets/aa.meta
-/Chess/Assets/StreamingAssets/aa/
+/PixelShooter/Assets/AddressableAssetsData/*/*.bin*
+/PixelShooter/Assets/StreamingAssets/aa.meta
+/PixelShooter/Assets/StreamingAssets/aa/
 
 # Local secrets and operating-system files.
 .env
